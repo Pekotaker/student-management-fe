@@ -18,6 +18,7 @@ function TeacherScores() {
   const [selectedStudent, setSelectedStudent] = useState("");
   const [scoreValue, setScoreValue] = useState("");
   const [message, setMessage] = useState("");
+  const [error, setError] = useState(null);
 
   // We'll fetch the teacherId from localStorage, or you can decode the JWT token
   useEffect(() => {
@@ -45,6 +46,7 @@ function TeacherScores() {
 
         console.log(response.data);
       } catch (err) {
+        setError("Error fetching students");
         console.error("Error fetching students", err);
       }
     }
@@ -58,6 +60,7 @@ function TeacherScores() {
         
         console.log(response.data);
       } catch (err) {
+        setError("Error fetching subject");
         console.error("Error fetching subject", err);
       }
     }
@@ -84,6 +87,7 @@ function TeacherScores() {
       setMessage(response.data.message);
     } catch (err) {
       setMessage("Error adding score");
+      setError("Error adding score");
       console.error("Error adding score", err);
     }
   }
@@ -129,7 +133,11 @@ function TeacherScores() {
         </Button>
       </form>
 
-      {message && <Typography sx={{ mt: 2 }}>{message}</Typography>}
+      {message && 
+        <Typography sx={{ mt: 2 }} color={error ? "error" : "success"}>
+          {message}
+        </Typography>
+      }
     </div>
   );
 }
