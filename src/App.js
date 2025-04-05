@@ -7,7 +7,7 @@ import NotFound from "./pages/NotFound";
 import AdminDashboard from "./components/AdminDashboard";
 import TeacherDashboard from "./components/TeacherDashboard";
 import StudentDashboard from "./components/StudentDashboard";
-import AdminLogin from "./pages/AdminLogin"; // NEW
+import AdminLogin from "./pages/AdminLogin";
 
 // Material UI theme
 const theme = createTheme({

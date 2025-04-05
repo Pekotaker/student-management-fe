@@ -5,6 +5,8 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 
 import TeacherScores from "../roles/TeacherScores";
+import TeacherStudents from "../roles/TeacherStudents";
+import TeacherClasses from "../roles/TeacherClasses";
 
 function TeacherDashboard() {
   return (
@@ -15,6 +17,13 @@ function TeacherDashboard() {
       <Button variant="contained" component={Link} to="scores">
         Update Scores
       </Button>
+      <Button variant="contained" component={Link} to="students" sx={{ ml: 2 }}>
+        View Students
+      </Button>
+      <Button variant="contained" component={Link} to="classes" sx={{ ml: 2 }}>
+        View Classes
+      </Button>
+
 
       <Routes>
         <Route path="scores" element={<TeacherScores />} />
@@ -24,6 +33,8 @@ function TeacherDashboard() {
             <Typography mt={2}>Choose a teacher action above.</Typography>
           }
         />
+        <Route path="students" element={<TeacherStudents />} />
+        <Route path="classes" element={<TeacherClasses />} />
       </Routes>
     </Container>
   );

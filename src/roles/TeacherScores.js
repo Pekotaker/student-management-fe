@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { addTeacherScore, getTeacherStudents } from "../services/api";
+import { addTeacherScore, getTeacherStudents, getSubject } from "../services/api";
 import {
   TextField,
   Button,
@@ -12,6 +12,8 @@ import {
 
 function TeacherScores() {
   const [teacherId, setTeacherId] = useState(null); // or decode from JWT
+  const [subjectId, setSubjectId] = useState(""); // subject ID
+  const [subjectName, setSubjectName] = useState(""); // subject name
   const [students, setStudents] = useState([]); // store fetched students
   const [selectedStudent, setSelectedStudent] = useState("");
   const [scoreValue, setScoreValue] = useState("");
@@ -32,7 +34,7 @@ function TeacherScores() {
     }
   }, []);
 
-  // Whenever teacherId is set, fetch the list of assigned students
+  // Whenever teacherId is set, fetch the list of assigned students and the subject
   useEffect(() => {
     async function fetchStudents() {
       try {
@@ -46,29 +48,51 @@ function TeacherScores() {
         console.error("Error fetching students", err);
       }
     }
+    async function fetchSubject() {
+      try {
+        if (!teacherId) return;
+        const token = localStorage.getItem("token");
+        const response = await getSubject(teacherId, token);
+        setSubjectId(response.data.subject_id);
+        setSubjectName(response.data.subject_name);
+        
+        console.log(response.data);
+      } catch (err) {
+        console.error("Error fetching subject", err);
+      }
+    }
+    fetchSubject();
     fetchStudents();
   }, [teacherId]);
+
+  // Whenever subjectId is set, fetch the subject
+
 
   async function handleScore(e) {
     e.preventDefault();
     try {
       const token = localStorage.getItem("token");
-      await addTeacherScore(
+      const response = await addTeacherScore(
         {
           student_id: selectedStudent, // the ID from the select
           teacher_id: teacherId,
+          subject_id: subjectId,
           score_value: scoreValue,
         },
         token
       );
-      setMessage("Score added successfully");
+      setMessage(response.data.message);
     } catch (err) {
       setMessage("Error adding score");
+      console.error("Error adding score", err);
     }
   }
 
   return (
     <div style={{ marginTop: "1rem" }}>
+      <Typography variant="h6" gutterBottom>
+        My subject: {subjectName}
+      </Typography>
       <Typography variant="h5" gutterBottom>
         Update / Add Scores
       </Typography>
