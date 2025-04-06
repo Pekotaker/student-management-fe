@@ -4,6 +4,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { Link, useNavigate } from "react-router-dom";
+import logo from "../assets/images/logo.jpg"
 
 function NavBar() {
   const navigate = useNavigate();
@@ -17,6 +18,7 @@ function NavBar() {
   return (
     <AppBar position="static">
       <Toolbar>
+        <img src={logo} alt="Logo" style={{ maxWidth: "auto", maxHeight: 80, marginRight: 16 }} />
         <Typography variant="h6" sx={{ flexGrow: 1 }}>
           <Link to="/" style={{ color: "inherit", textDecoration: "none" }}>
             Student Management
