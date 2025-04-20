@@ -34,6 +34,24 @@ export async function createSchedule(data, token) {
   });
 }
 
+export async function getTeachers(token) {
+  return axios.get(`${API_URL}/admin/teachers`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+}
+
+export async function getClasses(token) {
+  return axios.get(`${API_URL}/admin/classes`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+}
+
+export async function getSubjects(token) {
+  return axios.get(`${API_URL}/admin/subjects`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+}
+
 // ---------- Teacher Routes ----------
 
 export async function getSubject(teacherId, token) {
